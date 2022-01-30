@@ -23,20 +23,19 @@
                 onSubmit = (e) => {
                     e.preventDefault();
                     if(parseInt(this.state.value) === this.state.first * this.state.second){
-                        const 정답 = (this.state.value)+' = 정답!'
                         this.setState({
-                            result: 정답, 
+                            result: this.state.value + ' = 딩동댕!', 
                             first : Math.ceil(Math.random() * 9),
                             second : Math.ceil(Math.random() * 9),
                             value :'',
                         })
                     }else{
-                        const 땡 = (this.state.value)+' = 땡!'
                         this.setState({
-                            result: 땡,
+                            result: this.state.value + ' = 땡!', 
                             value: ''
                         });
                     }
+                    this.input.focus();
                 };
 
                 onChange = (e) => {
@@ -44,11 +43,13 @@
                 };
 
                 render(){
+                    // console.log('렌더링'); -> setState를 하면 렌더함수가 다시 실행된다 -> 렌더를 너무 많이하면 느려짐(ex. 10초걸리는 작업) -> 성느최적화할때 사용한다
+                    // render에 함수를 넣는 이유? 함수가 아닌 코드를 직접 짜면 렌더링할 때마다 함수를 새로 실행되는 문제가 생김
                     return (
                         <React.Fragment>
                             <div> {this.state.first} * {this.state.second} = ? </div>
                             <form onSubmit = {this.onSubmit}>
-                                <input type = "number" value = {this.state.value} onChange = {this.onChange} />    
+                                <input ref={(c) => {this.input = c;}} type = "number" value = {this.state.value} onChange = {this.onChange} />    
                                 <button type = "submit"> 입력 </button>
                             </form>
                             <div>{this.state.result}</div>
