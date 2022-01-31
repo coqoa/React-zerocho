@@ -2,7 +2,6 @@
     <head>
         <meta charset="UTF-8" />
         <title>구구단</title>
-        <!-- <script src="like-button.js"></script> -->
         <script src="https://unpkg.com/react@17.0.2/umd/react.production.min.js"></script>
         <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
         <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -12,52 +11,44 @@
 
         <script type="text/babel">
             
-            class GuGuDan extends React.Component {
-                state = {
-                    first : Math.ceil(Math.random() * 9),
-                    second : Math.ceil(Math.random() * 9),
-                    value :'',
-                    result: '' 
-                };
+            const GuGuDan = () => {
+                const [first, setFirst] = React.useState(Math.ceil(Math.random() * 9));
+                const [second, setSecond] = React.useState(Math.ceil(Math.random() * 9));
+                const [value, setValue] = React.useState('');
+                const [result, setResult] = React.useState('');
+                const inputRef = React.useRef();
 
-                onSubmit = (e) => {
+                const onSubmitForm = (e) => {
                     e.preventDefault();
-                    if(parseInt(this.state.value) === this.state.first * this.state.second){
-                        this.setState({
-                            result: this.state.value + ' = 딩동댕!', 
-                            first : Math.ceil(Math.random() * 9),
-                            second : Math.ceil(Math.random() * 9),
-                            value :'',
-                        })
+                    if(parseInt(value) === first * second){
+                        setResult(value + ' = 딩동댕!');
+                        setFirst(Math.ceil(Math.random() * 9));
+                        setSecond(Math.ceil(Math.random() * 9));
+                        setValue('');
+                        inputRef.current.focus();
                     }else{
-                        this.setState({
-                            result: this.state.value + ' = 땡!', 
-                            value: ''
-                        });
+                        setResult(value + ' = 땡!');
+                        setValue('');
+                        inputRef.current.focus();
                     }
-                    this.input.focus();
                 };
 
-                onChange = (e) => {
-                    this.setState({ value : e.target.value})
+                const onChangeInput = (e) => {
+                    setValue(e.target.value);
                 };
 
-                render(){
-                    // console.log('렌더링'); -> setState를 하면 렌더함수가 다시 실행된다 -> 렌더를 너무 많이하면 느려짐(ex. 10초걸리는 작업) -> 성느최적화할때 사용한다
-                    // render에 함수를 넣는 이유? 함수가 아닌 코드를 직접 짜면 렌더링할 때마다 함수를 새로 실행되는 문제가 생김
-                    return (
-                        <React.Fragment>
-                            <div> {this.state.first} * {this.state.second} = ? </div>
-                            <form onSubmit = {this.onSubmit}>
-                                <input ref={(c) => {this.input = c;}} type = "number" value = {this.state.value} onChange = {this.onChange} />    
-                                <button type = "submit"> 입력 </button>
-                            </form>
-                            <div>{this.state.result}</div>
-                        </React.Fragment>
-                    );
-                }
-            }
-                
+                return (
+                    <React.fragment>
+                        <div>{first} x {second} ?</div>
+                        <form onSubmit={onSubmitForm}>
+                            <input ref={inputRef} onChange={onChangeInput} value = {value} />    
+                            <button>입력!</button>
+                        </form>
+                        <div id="result">{result}</div>
+                    </React.fragment>
+                );
+            };
+
         </script>
 
         <script type="text/babel">
