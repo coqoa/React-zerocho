@@ -2,8 +2,8 @@
     <head>
         <meta charset="UTF-8" />
         <title>구구단</title>
-        <script src="https://unpkg.com/react@17.0.2/umd/react.production.min.js"></script>
-        <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
+        <script src="https://unpkg.com/react@17.0.2/umd/react.development.js"></script>
+        <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.development.js"></script>
         <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     </head>
     <body>
@@ -38,14 +38,14 @@
                 };
 
                 return (
-                    <React.fragment>
+                    <React.Fragment>
                         <div>{first} x {second} ?</div>
                         <form onSubmit={onSubmitForm}>
                             <input ref={inputRef} onChange={onChangeInput} value = {value} />    
                             <button>입력!</button>
                         </form>
                         <div id="result">{result}</div>
-                    </React.fragment>
+                    </React.Fragment>
                 );
             };
 
